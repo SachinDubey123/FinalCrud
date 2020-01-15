@@ -1,0 +1,13 @@
+EmpId	int	Unchecked
+Name	varchar(150)	Unchecked
+Gender	int	Unchecked
+DOB	datetime	Unchecked
+Address	varchar(500)	Unchecked
+CityId	int	Unchecked
+DepartmentId	int	Unchecked
+IsActive	bit	Unchecked
+		Unchecked
+    
+    
+    
+    
