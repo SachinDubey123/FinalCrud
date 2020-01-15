@@ -1,0 +1,113 @@
+﻿@model CrudDemo.Models.EmployeeViewModel
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "CreateEdit";
+}
+
+
+@section Scripts {
+    @Styles.Render("~/bundles/jquery")
+    @Scripts.Render("~/Content/css")
+
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({
+                //dateFormat: "dd/MM/yy",
+                format: 'dd/mm/yyyy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0",
+                maxDate: new Date()
+            });
+
+        });
+    </script>
+
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("CreateEdit", "Test", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Employees</h4>
+        <hr />
+        @Html.HiddenFor(x => x.EmpId)
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Gender, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButton("Gender", 1)Male
+                @Html.RadioButton("Gender", 2)Female
+                @*@Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DOB, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", placeholder = "Employee Date Of Birth", @readonly = "true" } })
+                @*@Html.TextBoxFor(x => x.DOB, new { htmlAttributes = new { @class = "form-control", placeholder = "Employee Date Of Birth", @readonly = "true" } })*@
+                @Html.ValidationMessageFor(x => x.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">City</label>
+            @*@Html.LabelFor(x => x.CityId, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.CityId, ViewBag.cityList as SelectList, "--select--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Department</label>
+            <div class="col-md-10">
+                @Html.ListBoxFor(x => x.SelectedDeparts, Model.Departs)
+                @*@Html.DropDownListFor(x => x.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(x => x.DepartmentId, "", new { @class = "text-danger" })
+
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
