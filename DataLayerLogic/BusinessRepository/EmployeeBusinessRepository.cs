@@ -1,11 +1,9 @@
-﻿using DataLayerLogic.Model;
+﻿
 using DomainLayer.Model;
 using DomainLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace DataLayerLogic.BusinessRepository
@@ -20,25 +18,24 @@ namespace DataLayerLogic.BusinessRepository
         {
             int maxRows = 10;
             List<EmployeeViewModel> List = new List<EmployeeViewModel>();
-            using (CrudDemoDBEntities entities = new CrudDemoDBEntities())
+            using (DomainLayer.Model.CrudDemoDBEntities entities = new DomainLayer.Model.CrudDemoDBEntities())
             {
-                EmployeeViewModel1 customerModel1 = new EmployeeViewModel1();
                 EmployeeViewModel customerModel = new EmployeeViewModel();
                 // CustomerModel customerModel = new CustomerModel();
 
-                var name = (from customer in entities.Employees
-                                            where customer.IsActive != false
-                                            select customer)
+                customerModel.EMployees = (from customer in entities.Employees
+                                           where customer.IsActive != false
+                                           select customer)
                             .OrderBy(customer => customer.EmpId)
                             .Skip((currentPage - 1) * maxRows)
                             .Take(maxRows).ToList();
 
                 double pageCount = (double)((decimal)entities.Employees.Count() / Convert.ToDecimal(maxRows));
-                customerModel1.PageCount = (int)Math.Ceiling(pageCount);
+                customerModel.PageCount = (int)Math.Ceiling(pageCount);
 
-                customerModel1.CurrentPageIndex = currentPage;
+                customerModel.CurrentPageIndex = currentPage;
 
-
+                //List = db.Employees
                 //List = db.Employees
                 //  .OrderBy(customer => customer.EmpId)
                 //            .Skip((currentPage - 1) * maxRows)

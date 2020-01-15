@@ -4,6 +4,9 @@ using DomainLayer.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using City = DataLayerLogic.City;
+using CrudDemoDBEntities = DataLayerLogic.CrudDemoDBEntities;
+using Department = DataLayerLogic.Department;
 
 namespace CrudDemo.Controllers
 {
@@ -28,7 +31,7 @@ namespace CrudDemo.Controllers
 
         public ActionResult CreateEdit(int EmployeeId = 0)
         {
-            EmployeeViewModel blogpost = _repo.GetEmployee(EmployeeId);
+            var blogpost = _repo.GetEmployee(EmployeeId);
             CrudDemoDBEntities db = new CrudDemoDBEntities();
             List<City> citylist = db.Cities.ToList();
             ViewBag.cityList = new SelectList(citylist, "CityId", "CityName");
