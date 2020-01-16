@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,15 @@ namespace DomainLayer.Model
     public class EmployeeViewModel
     {
         public int EmpId { get; set; }
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Gender is required.")]
         public int Gender { get; set; }
-        public System.DateTime DOB { get; set; }
+        [Required(ErrorMessage = "DOB is required")]
+        public System.DateTime? DOB { get; set; }
+        [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
+        [Required(ErrorMessage = "Select a city.")]
         public int CityId { get; set; }
         public int DepartmentId { get; set; }
         public bool IsActive { get; set; }
@@ -33,6 +39,8 @@ namespace DomainLayer.Model
         ///</summary>
         public int PageCount { get; set; }
         public IEnumerable<SelectListItem> Departs { get; set; }
+
+        public IEnumerable<SelectListItem> CitiesList { get; set; }
 
         public IEnumerable<string> SelectedDeparts { get; set; }
 

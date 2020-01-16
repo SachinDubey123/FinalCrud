@@ -28,5 +28,10 @@ namespace DomainLayer.Model
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+
+        public static explicit operator CrudDemoDBEntities(DbSet<Department> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

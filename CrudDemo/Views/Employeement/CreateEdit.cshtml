@@ -54,8 +54,8 @@
             <div class="col-md-10">
                 @Html.RadioButton("Gender", 1)Male
                 @Html.RadioButton("Gender", 2)Female
-                @*@Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })*@
+                @*@Html.TextBoxFor(x => x.Email, new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(x => x.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -78,7 +78,7 @@
             @*@Html.LabelFor(x => x.CityId, new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownListFor(x => x.CityId, ViewBag.cityList as SelectList, "--select--", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.CityId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">

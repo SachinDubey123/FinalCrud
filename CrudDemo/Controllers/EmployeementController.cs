@@ -32,9 +32,10 @@ namespace CrudDemo.Controllers
         public ActionResult CreateEdit(int EmployeeId = 0)
         {
             var blogpost = _repo.GetEmployee(EmployeeId);
-            CrudDemoDBEntities db = new CrudDemoDBEntities();
-            List<City> citylist = db.Cities.ToList();
-            ViewBag.cityList = new SelectList(citylist, "CityId", "CityName");
+            //CrudDemoDBEntities db = new CrudDemoDBEntities();
+            //List<City> citylist = db.Cities.ToList();
+            //ViewBag.cityList = new SelectList(citylist, "CityId", "CityName");
+            ViewBag.cityList = blogpost.CitiesList;
             return View(blogpost);
             //CrudDemoDBEntities db = new CrudDemoDBEntities();
 
@@ -81,11 +82,11 @@ namespace CrudDemo.Controllers
         public ActionResult CreateEdit(EmployeeViewModel model)
         {
             CrudDemoDBEntities db = new CrudDemoDBEntities();
-            List<Department> deptlist = db.Departments.ToList();
-            ViewBag.DepartmentList = new SelectList(deptlist, "DepartmentId", "DepartmentName");
+            //List<Department> deptlist = db.Departments.ToList();
+            //ViewBag.DepartmentList = new SelectList(deptlist, "DepartmentId", "DepartmentName");
 
-            List<City> citylist = db.Cities.ToList();
-            ViewBag.cityList = new SelectList(citylist, "CityId", "CityName");
+            //List<City> citylist = db.Cities.ToList();
+            //ViewBag.cityList = new SelectList(citylist, "CityId", "CityName");
             if (ModelState.IsValid)
             {
                 _repo.CreateEmp(model);

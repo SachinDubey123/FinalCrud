@@ -61,45 +61,50 @@ namespace DataLayerLogic.BusinessRepository
 
         public EmployeeViewModel GetEmployee(int EmployeeId)
         {
-            CrudDemoDBEntities db = new CrudDemoDBEntities();
-
-            List<SelectListItem> listOfDeparts = new List<SelectListItem>();
-            foreach (Department dept in db.Departments)
+            using (DomainLayer.Model.CrudDemoDBEntities db = new DomainLayer.Model.CrudDemoDBEntities())
             {
-                SelectListItem selectList = new SelectListItem()
+                //  CrudDemoDBEntities db = new CrudDemoDBEntities();
+
+
+                List<SelectListItem> listOfDeparts = new List<SelectListItem>();
+                foreach (DomainLayer.Model.Department dept in db.Departments)
                 {
-                    Text = dept.DepartmentName,
-                    Value = dept.DepartmentId.ToString(),
-                    Selected = dept.IsActive
-                };
-                listOfDeparts.Add(selectList);
+                    SelectListItem selectList = new SelectListItem()
+                    {
+                        Text = dept.DepartmentName,
+                        Value = dept.DepartmentId.ToString(),
+                        Selected = dept.IsActive
+                    };
+                    listOfDeparts.Add(selectList);
+                }
+                EmployeeViewModel customerModel = new EmployeeViewModel();
+                customerModel.Departs = listOfDeparts;
+
+                List<DomainLayer.Model.City> citylist = db.Cities.ToList();
+                customerModel.CitiesList = new SelectList(citylist, "CityId", "CityName");
+
+
+                if (EmployeeId > 0)
+                {
+                    //Employee emp = from x in db.Employees
+                    //               join y in db.Ci on x.EmpId equals y.Countryid into ps
+                    //               from p in ps
+                    //               select new { x.is, x.name, x.countryid, p.countryname }
+
+                    DomainLayer.Model.Employee emp = db.Employees.SingleOrDefault(x => x.EmpId == EmployeeId && x.IsActive == true);
+                    customerModel.EmpId = emp.EmpId;
+                    customerModel.DepartmentId = emp.DepartmentId;
+                    customerModel.Name = emp.Name;
+                    customerModel.Address = emp.Address;
+
+                    customerModel.Gender = emp.Gender;
+                    customerModel.DOB = emp.DOB;
+                    customerModel.CityId = emp.CityId;
+                    customerModel.IsActive = emp.IsActive;
+
+                }
+                return customerModel;
             }
-            EmployeeViewModel customerModel = new EmployeeViewModel();
-            customerModel.Departs = listOfDeparts;
-
-
-
-            if (EmployeeId > 0)
-            {
-                //Employee emp = from x in db.Employees
-                //               join y in db.Ci on x.EmpId equals y.Countryid into ps
-                //               from p in ps
-                //               select new { x.is, x.name, x.countryid, p.countryname }
-
-                Employee emp = db.Employees.SingleOrDefault(x => x.EmpId == EmployeeId && x.IsActive == true);
-                customerModel.EmpId = emp.EmpId;
-                customerModel.DepartmentId = emp.DepartmentId;
-                customerModel.Name = emp.Name;
-                customerModel.Address = emp.Address;
-
-                customerModel.Gender = emp.Gender;
-                customerModel.DOB = emp.DOB;
-                customerModel.CityId = emp.CityId;
-                customerModel.IsActive = emp.IsActive;
-
-            }
-            return customerModel;
-
         }
 
         public EmployeeViewModel CreateEmp(EmployeeViewModel model)
@@ -112,7 +117,7 @@ namespace DataLayerLogic.BusinessRepository
                 Employee emp = db.Employees.SingleOrDefault(x => x.EmpId == model.EmpId && x.IsActive == true);
                 emp.Name = model.Name;
                 emp.Gender = model.Gender;
-                emp.DOB = model.DOB;
+                emp.DOB = Convert.ToDateTime(model.DOB);
                 emp.Address = model.Address;
                 emp.CityId = model.CityId;
                 emp.DepartmentId = model.DepartmentId;
@@ -145,7 +150,7 @@ namespace DataLayerLogic.BusinessRepository
                 Employee emp = new Employee();
                 emp.Name = model.Name;
                 emp.Gender = model.Gender;
-                emp.DOB = model.DOB;
+                emp.DOB = Convert.ToDateTime(model.DOB);
                 emp.Address = model.Address;
                 emp.CityId = model.CityId;
 
